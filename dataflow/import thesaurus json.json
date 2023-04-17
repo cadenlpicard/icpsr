@@ -1,0 +1,97 @@
+{
+	"name": "import thesaurus json",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "blob_stage_xml",
+						"type": "DatasetReference"
+					},
+					"name": "XML"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dev_cp_tables",
+						"type": "DatasetReference"
+					},
+					"name": "thesaurustable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flatten1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     row as integer (1)",
+				"}",
+				"source(output(",
+				"          THESAURUS as (CONCEPT as (BT as string[], DESCRIPTOR as string, INP as string, {NON-DESCRIPTOR} as string, NT as string[], RT as string[], SN as string, TNR as short, UF as string, UPD as string, USE as string)[])",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     validationMode: 'none',",
+				"     namespaces: true) ~> XML",
+				"XML foldDown(unroll(THESAURUS.CONCEPT),",
+				"     mapColumn(",
+				"          BT = THESAURUS.CONCEPT.BT,",
+				"          DESCRIPTOR = THESAURUS.CONCEPT.DESCRIPTOR,",
+				"          INP = THESAURUS.CONCEPT.INP,",
+				"          {NON-DESCRIPTOR} = THESAURUS.CONCEPT.{NON-DESCRIPTOR},",
+				"          NT = THESAURUS.CONCEPT.NT,",
+				"          RT = THESAURUS.CONCEPT.RT,",
+				"          SN = THESAURUS.CONCEPT.SN,",
+				"          TNR = THESAURUS.CONCEPT.TNR,",
+				"          UF = THESAURUS.CONCEPT.UF,",
+				"          UPD = THESAURUS.CONCEPT.UPD,",
+				"          USE = THESAURUS.CONCEPT.USE",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          BT as string,",
+				"          DESCRIPTOR as string,",
+				"          INP as string,",
+				"          NONDESCRIPTOR as string,",
+				"          NT as string,",
+				"          RT as string,",
+				"          SN as string,",
+				"          TNR as string,",
+				"          UF as string,",
+				"          UPD as string,",
+				"          USES as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          BT,",
+				"          DESCRIPTOR,",
+				"          INP,",
+				"          NONDESCRIPTOR = {NON-DESCRIPTOR},",
+				"          NT,",
+				"          RT,",
+				"          SN,",
+				"          TNR,",
+				"          UF,",
+				"          UPD,",
+				"          USES = USE",
+				"     )) ~> thesaurustable"
+			]
+		}
+	}
+}

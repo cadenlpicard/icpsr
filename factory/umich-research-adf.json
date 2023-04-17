@@ -1,0 +1,9 @@
+{
+	"name": "umich-research-adf",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a020c692-e13c-40c5-b24a-00cc4e4b0921",
+		"tenantId": "0d53b0b5-afe6-4501-950f-7c4587235457"
+	}
+}

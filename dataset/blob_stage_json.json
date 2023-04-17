@@ -1,0 +1,73 @@
+{
+	"name": "blob_stage_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "icpsr_blob",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folder": {
+				"type": "string"
+			},
+			"file": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "umichresearch_stage"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
+				"container": "stage"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"THESAURUS": {
+					"type": "object",
+					"properties": {
+						"CONCEPT": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"DESCRIPTOR": {
+										"type": "string"
+									},
+									"RT": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									"INP": {
+										"type": "string"
+									},
+									"UPD": {
+										"type": "string"
+									},
+									"TNR": {
+										"type": "integer"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "blob_stage_xml",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "icpsr_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "umichresearch_stage"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "thesaurusexport.xml",
+				"folderPath": "metadata",
+				"container": "stage"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
