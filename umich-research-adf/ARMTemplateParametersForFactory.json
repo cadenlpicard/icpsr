@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "umich-research-adf"
+		},
+		"dev_cp_connectionString": {
+			"value": ""
+		},
+		"icpsr_blob_connectionString": {
+			"value": ""
+		},
+		"umich_icpsr_connectionString": {
+			"value": ""
+		},
+		"icpsr_blob_sasuri_sasUri": {
+			"value": ""
+		},
+		"icpsr_vault_properties_typeProperties_baseUrl": {
+			"value": "https://icpsr-vault.vault.azure.net/"
+		}
+	}
+}
